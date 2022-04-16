@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require_relative '../board.rb'
 
 # Chess piece class from which all other pieces will inherit
 class ChessPiece
@@ -8,8 +7,8 @@ class ChessPiece
     # Color is false for black (absence of color) and true for white
     @color = color ? 'white' : 'black'
     # Position on board will be input as an array with two elements
-    @x_position = position[0]
-    @y_position = position[1]
+    @y_position = position[0]
+    @x_position = position[1]
     @possible_moves = []
   end
 
@@ -20,12 +19,12 @@ class ChessPiece
   def find_possible_moves()
     @possible_moves = [board]
     @moveset.each do |move|
-      if (0..7).include?(move[0] + @x_position) && (0..7).include?(move[1] + @y_position)
+      if (0..7).include?(move[0] + @y_position) && (0..7).include?(move[1] + @x_position)
         board.each do |piece|
-          if piece.color == @color && piece.x_position == (move[0] + @x_position) && piece.y_position == (move[1] + @y_position) 
+          if piece.color == @color && piece.y_position == (move[0] + @y_position) && piece.y_position == (move[1] + @x_position) 
             next
           else
-            @possible_moves << [move[0] + @x_position, move[1] + @y_position]
+            @possible_moves << [move[0] + @y_position, move[1] + @x_position]
           end
         end
       end

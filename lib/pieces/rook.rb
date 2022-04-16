@@ -1,11 +1,8 @@
 # frozen_string_literal: true
-require_relative '../board.rb'
 require_relative 'piece.rb'
 
 # Class determining Rook behavior
-class Pawn < ChessPiece
-attr_accessor :color, :moveset, :x_position, :y_position, :possible_moves
-
+class Rook < ChessPiece
   def initialize(color, position)
     @moveset = [
       [0, +1],
@@ -13,7 +10,7 @@ attr_accessor :color, :moveset, :x_position, :y_position, :possible_moves
       [0, -1],
       [-1, 0]
     ]
-    @icon = color ? '♖' : '♜'
+    @icon = color ? '♜' : '♖'
     @possible_moves = []
     super
   end

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
-require_relative '../board.rb'
 require_relative 'piece.rb'
 
 # Class determining Queen behavior
-class Queen < ChessPiece
-  def initialize(position, is_white)
+class Queen < ChessPiece  
+  def initialize(color, position)
     @moveset = [
       [1, 1],
       [1, -1],
@@ -15,7 +14,7 @@ class Queen < ChessPiece
       [1, 0],
       [-1, 0]
     ]
-    @icon = is_white ? '♕' : '♛'
+    @icon = color ? '♛' : '♕'
     @possible_moves = []
     super
   end
