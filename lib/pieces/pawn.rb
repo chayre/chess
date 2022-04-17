@@ -5,7 +5,9 @@ require_relative 'piece.rb'
 class Pawn < ChessPiece
   def initialize(color, position)
     @moveset = [
-      [+1, +0]
+      [+1, +0],
+      [+1, +1],
+      [1, -1]
     ]
     @icon = color ? '♟' : '♙'
     @possible_moves = []
