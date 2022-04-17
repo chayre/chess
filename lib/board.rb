@@ -90,15 +90,23 @@ class Board
     puts "       A     B     C     D     E     F     G     H  \n\n"
   end
 
+  def logo
+    puts  '              _'
+    puts  '             | |                            __'
+    puts  '          ___| |__   ___  ___ ___          (  )'
+    puts  '         / __| \'_ \\ / _ \\/ __/ __|          ||'
+    puts  '        | (__| | | |  __/\\__ \\__ \\         /__\\'
+    puts  '         \\___|_| |_|\\___||___/___/        (____)'
+  end
+
+
   def display
-    #clear
-    #ChessText.title
+    logo
     display_top_border
     display_rows
     display_bottom_border
     display_x_axis
   end
-
 end
 
 game = Board.new
