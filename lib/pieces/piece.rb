@@ -19,20 +19,15 @@ class ChessPiece
   def find_possible_moves(positions)
     @possible_moves = []
     @moveset.each do |move|
-      x = @x_position + move[0]*-1
-      y = @y_position + move[1]*-1
+      x = @x_position + move[0]
+      y = @y_position + move[1]
       loop do
         break unless (0..7).cover?(x) && (0..7).cover?(y)
         @possible_moves << [x, y] if positions[x][y].nil? || positions[x][y].color != @color
-        p [x, y]
-        p positions[x][y] 
-        #p positions[x][y].color
         break if !positions[x][y].nil?
         x += move[0]
         y += move[1]
       end
-      p 'POSSIBLE MOVES::::'
-      p @possible_moves
     end
   end
 end

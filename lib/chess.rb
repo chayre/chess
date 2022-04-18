@@ -53,8 +53,6 @@ class Chess
       desired_position = normalize([move[4], move[3]])
       piece = @board.positions[current_position[0]][current_position[1]]
       update_possible_moves
-      p piece.possible_moves
-      p piece
       break if !piece.nil? && piece.possible_moves.include?(desired_position) && piece.color == @current_player.color
       print "\nInvalid move. Try again.\n> "
     end
