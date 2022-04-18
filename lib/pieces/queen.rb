@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-require_relative 'piece.rb'
+
+require_relative 'piece'
 
 # Class determining Queen behavior
-class Queen < ChessPiece  
+class Queen < ChessPiece
   def initialize(color, position)
     @moveset = [
       [1, 1],

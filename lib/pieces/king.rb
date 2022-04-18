@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require_relative 'piece.rb'
+
+require_relative 'piece'
 
 # Class determining King behavior
 class King < ChessPiece

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
-require_relative 'pieces/piece.rb'
-require_relative 'pieces/knight.rb'
-require_relative 'pieces/queen.rb'
-require_relative 'pieces/rook.rb'
-require_relative 'pieces/bishop.rb'
-require_relative 'pieces/king.rb'
-require_relative 'pieces/pawn.rb'
+
+require_relative 'pieces/knight'
+require_relative 'pieces/queen'
+require_relative 'pieces/rook'
+require_relative 'pieces/bishop'
+require_relative 'pieces/king'
+require_relative 'pieces/pawn'
 
 # Class which places pieces on the board, tracks them in a positions array, and draws the board
 class Board
