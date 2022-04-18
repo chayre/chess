@@ -23,10 +23,17 @@ class Chess
     @player1 = Player.new(true)
     @player2 = Player.new(false)
     @current_player = @player1
+    @standby_player = @player2
   end
 
   def switch_player
-    @current_player.color == 'white' ? @current_player = @player2 : @current_player = @player1
+    if @current_player.color == 'white'
+      @current_player = @player2
+      @standby_player = @player1
+    else
+      @current_player = @player1
+      @standby_player = @player2
+    end
   end 
 
   def play_turn
@@ -41,9 +48,6 @@ class Chess
       current_position = normalize([move[2], move[1]])
       desired_position = normalize([move[4], move[3]])
       piece = @board.positions[current_position[0]][current_position[1]]
-      p piece
-      update_possible_moves
-      p piece
       break if !piece.nil? && piece.possible_moves.include?(desired_position) && piece.color == @current_player.color
       print "\nInvalid move. Try again.\n> "
     end
@@ -61,41 +65,62 @@ class Chess
 
   def play_game
     game_setup
-    until checkmate?
+    until checkmate? || draw?
       play_turn
       @board.display
     end
   end
 
   def checkmate?
+    update_possible_moves
     @board.positions.flatten.select {|square| square.instance_of?(King) && square.color == @current_player.color }.each do |king|
-      p 'nothing'
       return false if !king.in_check?(@board.positions)
-      p 'IN CHECK'
+      puts "#{@current_player.name}, your #{@current_player.color} king is in check!"
       return false if any_breaks_checks? == true
-      p 
       return false if !king.possible_moves.empty?
     end
-    true
+    puts "#{@current_player.name}, the #{@current_player.color} king is in checkmate. #{@standby_player.name}, #{@standby_player.color} wins!"
+    return true
   end
 
-  def breaks_check?(current, desired)
+  def draw?
+    white_count = 0
+    black_count = 0
+    @board.positions.each do |row|
+      row.each do |piece|
+        if piece.nil?
+          next
+        elsif piece.color == 'white'
+          white_count += 1
+        elsif piece.color == 'black'
+          black_count += 1
+        end
+      end
+    end
+    if (white_count + black_count) == 2 
+      puts "It's a draw!"
+      return true
+    end
+    false
+  end
+
+  def breaks_check?(current, desired, piece)
     breaks_check = false
     cache = Marshal.load(Marshal.dump(@board.positions))
 
-    move(current, desired)
-    @board.positions.flatten.select { |square| !square.nil? && square.instance_of?(King) && square.color == current_color }.each do |king|
+    move(current, desired, piece)
+    @board.positions.flatten.select { |square| !square.nil? && square.instance_of?(King) && square.color == @current_player.color }.each do |king|
       breaks_check = true if king.in_check?(@board.positions) == false
     end
     @board.positions = cache
     update_possible_moves
     breaks_check
   end
-  
+
   def any_breaks_checks?
     @board.positions.flatten.select { |square| !square.nil? && square.color == @current_player.color }.each do |piece|
       piece.possible_moves.each do |move|
-        if breaks_check?([piece.x, piece.y], move)
+        if breaks_check?([piece.x_position, piece.y_position], move, piece)
           return true
         end
       end
@@ -128,6 +153,4 @@ class Chess
 end
 
 game = Chess.new
-#game.game_setup
 game.play_game
-
