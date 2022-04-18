@@ -151,6 +151,3 @@ class Chess
     array
   end
 end
-
-game = Chess.new
-game.play_game
