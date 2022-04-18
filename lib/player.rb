@@ -9,7 +9,7 @@
 
 # Class which places pieces on the board, tracks them in a positions array, and draws the board
 class Player
-  attr_accessor :color, :name, :team
+  attr_accessor :color, :name
 
   def initialize(color)
     @color = color ? 'white' : 'black'
@@ -18,7 +18,7 @@ class Player
   end
 
   def name_get
-    puts "Which player will play #{@team}? Type their name."
+    puts "Which player will play #{@color}? Type their name."
     @name = gets.chomp
   end
 

@@ -14,9 +14,6 @@ class Board
   def initialize
     # Initialize the board, which is an 8 x 8 array of nil elements before placing pieces
     @positions = Array.new(8) { Array.new(8, nil) }
-    fill_board
-    logo
-    display
   end
 
   def fill_board
