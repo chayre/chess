@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Class which places pieces on the board, tracks them in a positions array, and draws the board
+# Class which defines player name and their team (color)
 class Player
   attr_accessor :color, :name
 
@@ -15,6 +15,7 @@ class Player
     @name = gets.chomp
   end
 
+  # Compare input to regex for a match; if not a match, loop through until input is valid
   def input_get
     puts 'Type your input in the form'
     input = gets.chomp.downcase

@@ -5,15 +5,18 @@ require_relative 'player'
 
 # Class which places pieces on the board, tracks them in a positions array, and draws the board
 class Chess
-  attr_accessor :positions, :board, :white_player, :black_player, :current_player
+  attr_accessor :positions, :board, :white_player, :black_player, :current_player, :standby_player
 
+  # When you start a new game, initialize the board 
   def initialize
     @board = Board.new
     @player1 = nil
     @player2 = nil
     @current_player = nil
+    @standby_player = nil
   end
 
+  # Create two instances of the player class, one for white and black. Set the current player to white (as they'll go first)
   def initialize_player
     @player1 = Player.new(true)
     @player2 = Player.new(false)
@@ -21,6 +24,7 @@ class Chess
     @standby_player = @player2
   end
 
+  # At the end of the turn, switch the commanding player from the current to standby
   def switch_player
     if @current_player.color == 'white'
       @current_player = @player2
@@ -31,6 +35,7 @@ class Chess
     end
   end 
 
+  # Get the move input; normalize it to two position arrays. Check if the move is possible and loop again if it's not
   def play_turn
     print "It's your turn, #{@current_player.name}. Write your move as (for example): C5 to D3\n\n"
     move = nil
