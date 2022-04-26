@@ -17,7 +17,7 @@ class Player
 
   # Compare input to regex for a match; if not a match, loop through until input is valid
   def input_get
-    puts 'Type your input in the form'
+    puts 'Submit input:'
     input = gets.chomp.downcase
     regex = /^([a-h])([1-8])\s{1}to\s{1}([a-h])([1-8])$/
     until regex =~ input
