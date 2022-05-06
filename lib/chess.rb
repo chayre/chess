@@ -154,6 +154,7 @@ class Chess
     @board.display
   end
 
+  # Standardizes input ("A1 to C2" -> "[1,1], [3,2]")
   def normalize(array)
     array[1] = array[1].ord - 97
     array[0] = 7 - (array[0].to_i - 1)
