@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Require all the pieces classes
 require_relative 'pieces/knight'
 require_relative 'pieces/queen'
 require_relative 'pieces/rook'
@@ -16,12 +17,14 @@ class Board
     @positions = Array.new(8) { Array.new(8, nil) }
   end
 
+  # Fill the white backline, black backline, and pawns on both sides for a new game
   def fill_board
     place_white_backline
     place_black_backline
     place_pawns
   end
-
+  
+  # Place the backline on the white side by filling the positions array with objects of the correct type
   def place_white_backline
     @positions[7][0] = Rook.new(true, [7, 0])
     @positions[7][1] = Knight.new(true, [7, 1])
