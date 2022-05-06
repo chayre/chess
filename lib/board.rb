@@ -24,7 +24,7 @@ class Board
     place_pawns
   end
   
-  # Place the backline on the white side by filling the positions array with objects of the correct type
+  # Place the backline on the white side by filling the positions array with objects of the appropriate class and type
   def place_white_backline
     @positions[7][0] = Rook.new(true, [7, 0])
     @positions[7][1] = Knight.new(true, [7, 1])
@@ -36,6 +36,7 @@ class Board
     @positions[7][7] = Rook.new(true, [7, 7])
   end
 
+  # Place the backline on the black side by filling the positions array with objects of the appropriate class and type
   def place_black_backline
     @positions[0][0] = Rook.new(false, [0, 0])
     @positions[0][1] = Knight.new(false, [0, 1])
@@ -47,6 +48,7 @@ class Board
     @positions[0][7] = Rook.new(false, [0, 7])
   end
 
+  # Place the pawns on each side by filling the positions array with objects of the appropriate class and type
   def place_pawns
     (0..7).each do |num|
       @positions[6][num] = Pawn.new(true, [6, num])
@@ -54,11 +56,13 @@ class Board
     end
   end
 
+  # Draw the top border of the chess board
   def display_top_border
     puts "\n"
     puts '    ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐'
   end
 
+  # Draw seven rows by displaying the object in each row (using display_row) and then displaying the separator. At the last row, don't draw out the separator
   def display_rows
     (1..7).each do |row_number|
       display_row(row_number)
@@ -67,32 +71,31 @@ class Board
     display_row(8)
   end
 
+  # Displays the rows numbers and each piece within that row
   def display_row(number)
-    square = number.even? ? 0 : 1
     print " #{9 - number}  "
-    @positions[number - 1].each do |position|
-      if position.nil?
-        print square.even? ? '│     ' : "│#{'     '}"
-      else
-        print square.even? ? "│  #{position.icon}  " : "│#{"  #{position.icon}  "}"
-      end
-      square += 1
+    @positions[number - 1].each do |position|  
+        print "│  #{position.icon}  "
     end
     puts '│'
   end
-
+  
+  # Display row seperators in middle of chess board
   def display_separator
     puts '    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤'
   end
 
+  # Display bottom of the chess board
   def display_bottom_border
     puts '    └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘'
   end
 
+  # Display x-axis markers
   def display_x_axis
     puts "       A     B     C     D     E     F     G     H  \n\n"
   end
 
+  # Draws the chess logo
   def logo
     puts  '              _'
     puts  '             | |                            __'
@@ -102,7 +105,7 @@ class Board
     puts  '         \\___|_| |_|\\___||___/___/        (____)'
   end
 
-
+  # Puts all the drawing helper methods together to draw the board
   def display
     display_top_border
     display_rows
