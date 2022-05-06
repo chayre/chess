@@ -137,12 +137,17 @@ class Chess
     false
   end
 
+  # Alters the possible moveset attribute of each piece based on current board positions
   def update_possible_moves
+    # Flatten 2x2 board arrow into single level array of pieces and iterate through each
     @board.positions.flatten.each do |piece|
+      # For each piece on the board, update its possible moveset by feeding in current board positions
+      # "&." ensures this will not execute the find_possible_moves function if piece is nil 
       piece&.find_possible_moves(@board.positions)
     end
   end
 
+  # Sets current piece location to nil and desired location to piece (destroys the piece that used to be in the desired position, if there was one)
   def move(current, desired, piece)
     @board.positions[current[0]][current[1]] = nil
     @board.positions[desired[0]][desired[1]] = piece
@@ -150,6 +155,7 @@ class Chess
     piece.y_position = desired[1]
   end
 
+  # Shows current board state
   def display
     @board.display
   end
