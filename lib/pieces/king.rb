@@ -30,7 +30,7 @@ class King < ChessPiece
 
       if (0..7).cover?(x) && (0..7).cover?(y)
 
-        test_positions = Marshal.load(Marshal.dump(positions))
+        test_positions = Board.clone(positions)
 
         test_positions[@x_position][@y_position] = nil
         test_king = King.new(true, [x, y])

@@ -2,6 +2,7 @@
 
 require_relative 'board'
 require_relative 'player'
+require 'pry'
 
 # Class which places pieces on the board, tracks them in a positions array, and draws the board
 class Chess
@@ -50,12 +51,12 @@ class Chess
       desired_position = normalize([move[4], move[3]])
       # Identify the piece that the player would like to move as piece
       piece = @board.positions[current_position[0]][current_position[1]]
-      # If the piece is not there, if its possible moves don't include the desired position, or if it isn't their piece then go through this loop again.
+      # If the piece is not there, if its possible moves don't include the desired position, or if it isn't their piece then go through this loop again
       break if !piece.nil? && piece.possible_moves.include?(desired_position) && piece.color == @current_player.color
       print "\nInvalid move. Try again.\n> "
     end
     # We got through our checks so the move is valid; execute the movement of the piece and switch to the other player
-    move(current_position, desired_position, piece)
+    move(current_position, desired_position)
     switch_player
   end
 
@@ -115,7 +116,7 @@ class Chess
       end
     end
     # This condition only true if there are two kings left
-    if (white_count + black_count) == 2 
+    if (white_count + black_count) == 2
       puts "It's a draw!"
       return true
     end
@@ -126,9 +127,9 @@ class Chess
   def breaks_check?(current, desired, piece)
     breaks_check = false
     # Save our current boardstate to be reinstate later
-    cache = Marshal.load(Marshal.dump(@board.positions))
+    cache = Board.clone(@board.positions)
     # Now that we saved the board, we'll perform a hypothetical move
-    move(current, desired, piece)
+    move(current, desired)
     # Go through the board until you find the current player's king
     @board.positions.flatten.select { |square| !square.nil? && square.instance_of?(King) && square.color == @current_player.color }.each do |king|
       # If the hypothetical move results in the king not being in check, this method will return true
@@ -145,7 +146,7 @@ class Chess
   def any_breaks_checks?
     # Iterate through each piece of the current player's color
     @board.positions.flatten.select { |square| !square.nil? && square.color == @current_player.color }.each do |piece|
-      # Iterate through each move for each piece's moveset 
+      # Iterate through each move for each piece's moveset
       piece.possible_moves.each do |move|
         # Check if that move has broken the king out of check. There only needs to be one instance of breaking check for the condition to be true
         if breaks_check?([piece.x_position, piece.y_position], move, piece)
@@ -162,16 +163,24 @@ class Chess
     @board.positions.flatten.each do |piece|
       # For each piece on the board, update its possible moveset by feeding in current board positions
       # "&." ensures this will not execute the find_possible_moves function if piece is nil 
-      piece&.find_possible_moves(@board.positions)
+      piece&.find_possible_moves(@board.positions) unless piece.instance_of?(King)
+    end
+    @board.positions.flatten.each do |piece|
+      piece&.find_possible_moves(@board.positions) if piece.instance_of?(King)
     end
   end
 
   # Sets current piece location to nil and desired location to piece (destroys the piece that used to be in the desired position, if there was one)
-  def move(current, desired, piece)
+  def move(current, desired)
+    temp = @board.positions[current[0]][current[1]]
+    if temp != nil
+      temp.x_position = desired[0]
+      temp.y_position = desired[1]
+    end
     @board.positions[current[0]][current[1]] = nil
-    @board.positions[desired[0]][desired[1]] = piece
-    piece.x_position = desired[0]
-    piece.y_position = desired[1]
+    @board.positions[desired[0]][desired[1]] = temp
+
+    update_possible_moves
   end
 
   # Shows current board state

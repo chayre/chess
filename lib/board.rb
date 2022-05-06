@@ -112,4 +112,8 @@ class Board
     display_bottom_border
     display_x_axis
   end
+
+  def self.clone(positions)
+    cache = Marshal.load(Marshal.dump(positions))
+  end
 end
