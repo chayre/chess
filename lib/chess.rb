@@ -78,15 +78,24 @@ class Chess
   end
 
   def checkmate?
+    strikes = 0
+    check = 0
     update_possible_moves
     @board.positions.flatten.select {|square| square.instance_of?(King) && square.color == @current_player.color }.each do |king|
-      return false if !king.in_check?(@board.positions)
-      puts "#{@current_player.name}, your #{@current_player.color} king is in check!"
-      return false if any_breaks_checks? == true
-      return false if !king.possible_moves.empty?
+      strikes += 1 if king.in_check?(@board.positions)
+      check += 1 if king.in_check?(@board.positions)
+      strikes += 1 if any_breaks_checks? == false
+      strikes += 1 if king.possible_moves.empty?
     end
-    puts "#{@current_player.name}, the #{@current_player.color} king is in checkmate. #{@standby_player.name}, #{@standby_player.color} wins!"
-    return true
+    if strikes == 3
+      puts "#{@current_player.name}, the #{@current_player.color} king is in checkmate. #{@standby_player.name}, #{@standby_player.color} wins!"
+      true
+    elsif check.positive?
+      puts "#{@current_player.name}, your #{@current_player.color} king is in check!"
+      false
+    else
+      false
+    end
   end
 
   # Check if there is a draw; if white and black each only have one piece, it means they must both be kings and the game is unwinnable
