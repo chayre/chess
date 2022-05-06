@@ -75,7 +75,7 @@ class Board
   def display_row(number)
     print " #{9 - number}  "
     @positions[number - 1].each do |position|  
-        print "│  #{position.icon}  "
+      print position.nil? ? '│     ' : "│  #{position.icon}  "
     end
     puts '│'
   end
