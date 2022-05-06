@@ -42,7 +42,7 @@ class Chess
     current_position = nil
     desired_position = nil
     piece = nil
-    
+
     loop do
       move = @current_player.input_get
       # Take the player input (which is in the form of "A4 to B3") and convert it to coordinates (like [1, 2] and [3, 5]) utilizing the normalize method
@@ -58,7 +58,7 @@ class Chess
     move(current_position, desired_position, piece)
     switch_player
   end
-  
+
   # Call this method when starting the game for the first time to draw the board and create the two players
   def game_setup
     @board.fill_board
@@ -122,22 +122,32 @@ class Chess
     false
   end
 
+  # Load the board positions which have been saved
   def breaks_check?(current, desired, piece)
     breaks_check = false
+    # Save our current boardstate to be reinstate later
     cache = Marshal.load(Marshal.dump(@board.positions))
-
+    # Now that we saved the board, we'll perform a hypothetical move
     move(current, desired, piece)
+    # Go through the board until you find the current player's king
     @board.positions.flatten.select { |square| !square.nil? && square.instance_of?(King) && square.color == @current_player.color }.each do |king|
+      # If the hypothetical move results in the king not being in check, this method will return true
       breaks_check = true if king.in_check?(@board.positions) == false
     end
+    # Reload previous boardstate, before we tried out a hypothetical move to see if it would break the king out of check
     @board.positions = cache
     update_possible_moves
+    # Returns true / false
     breaks_check
   end
 
+  # For each piece on the board of the current player's color, determine if it has a move which can break the king out of check
   def any_breaks_checks?
+    # Iterate through each piece of the current player's color
     @board.positions.flatten.select { |square| !square.nil? && square.color == @current_player.color }.each do |piece|
+      # Iterate through each move for each piece's moveset 
       piece.possible_moves.each do |move|
+        # Check if that move has broken the king out of check. There only needs to be one instance of breaking check for the condition to be true
         if breaks_check?([piece.x_position, piece.y_position], move, piece)
           return true
         end

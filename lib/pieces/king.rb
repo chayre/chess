@@ -66,8 +66,6 @@ class King < ChessPiece
         in_check = true if piece.possible_moves.include?([@x_position, @y_position])
       end
     end
-
     in_check
   end
-
 end
