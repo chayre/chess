@@ -42,20 +42,24 @@ class Chess
     current_position = nil
     desired_position = nil
     piece = nil
-
+    
     loop do
       move = @current_player.input_get
+      # Take the player input (which is in the form of "A4 to B3") and convert it to coordinates (like [1, 2] and [3, 5]) utilizing the normalize method
       current_position = normalize([move[2], move[1]])
       desired_position = normalize([move[4], move[3]])
+      # Identify the piece that the player would like to move as piece
       piece = @board.positions[current_position[0]][current_position[1]]
+      # If the piece is not there, if its possible moves don't include the desired position, or if it isn't their piece then go through this loop again.
       break if !piece.nil? && piece.possible_moves.include?(desired_position) && piece.color == @current_player.color
       print "\nInvalid move. Try again.\n> "
     end
-
+    # We got through our checks so the move is valid; execute the movement of the piece and switch to the other player
     move(current_position, desired_position, piece)
     switch_player
   end
-
+  
+  # Call this method when starting the game for the first time to draw the board and create the two players
   def game_setup
     @board.fill_board
     @board.logo
@@ -65,7 +69,9 @@ class Chess
 
   def play_game
     game_setup
+    # Continue playing until checmate or a draw
     until checkmate? || draw?
+      # Play a turn, then display the new board layout
       play_turn
       @board.display
     end
@@ -83,9 +89,11 @@ class Chess
     return true
   end
 
+  # Check if there is a draw; if white and black each only have one piece, it means they must both be kings and the game is unwinnable
   def draw?
     white_count = 0
     black_count = 0
+    # Count the pieces of each color that are left on the board
     @board.positions.each do |row|
       row.each do |piece|
         if piece.nil?
@@ -97,6 +105,7 @@ class Chess
         end
       end
     end
+    # This condition only true if there are two kings left
     if (white_count + black_count) == 2 
       puts "It's a draw!"
       return true
