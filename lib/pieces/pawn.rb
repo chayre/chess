@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'piece'
+require 'pry'
 
 # Class determining Pawn behavior
 class Pawn < ChessPiece
@@ -31,18 +32,32 @@ class Pawn < ChessPiece
     super
   end
 
+  # We redefine the find_possible_moves method, of which a different version is contained in the piece class, because pawns have some special movement behavior
+  # Unlike most other pieces, they cannot move indefinitely in a straight line, they can only move diagonally to capture, and they can only double-step if they haven't moved
   def find_possible_moves(positions)
     @possible_moves = []
 
+    # Check if the pawn has moved and set has_moved variable appropriately. Pawns cannot move back into their starting row, so if it isn't there it must have moved
+    case @color
+    when 'white'
+      @has_moved = true if @x_position != 6
+    when 'black'
+      @has_moved = true if @x_position != 1
+    end
+
+    # Iterate through each move that a pawn can do and check if it's possible; if it is, add to the possible_moves array
     @moveset.each_key do |move_type|
       x = @x_position + @moveset[move_type][0]
       y = @y_position + @moveset[move_type][1]
 
+      # Ensure move is within confines of board
       next unless (0..7).cover?(x) && (0..7).cover?(y)
 
       case move_type
+      # Pawns can't move forward if there's another piece blocking them
       when :one_step
         @possible_moves << [x, y] if positions[x][y].nil?
+      # Pawns can only double step if they haven't moved
       when :double_step
         @possible_moves << [x, y] if positions[x][y].nil? && positions[(x + @x_position) / 2][y].nil? && @has_moved == false
       when :right_diagonal, :left_diagonal
