@@ -3,6 +3,8 @@
 require_relative 'piece'
 
 # Class determining Knight behavior
+# Methods: find_possible_moves (determines valid moves based on @moveset and board positions)
+# Attributes: @moveset (over two, up one moves), @icon (black or white knight symbol), @possible_moves (array), @color (black or white), @x_position (0 - 7), @y_position (0 - 7)
 class Knight < ChessPiece
   def initialize(color, position)
     @moveset = [
@@ -16,7 +18,6 @@ class Knight < ChessPiece
       [+1, +2]
     ]
     @icon = color ? '♞' : '♘'
-    @possible_moves = []
     super
   end
 

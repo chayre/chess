@@ -3,6 +3,8 @@
 require_relative 'piece'
 
 # Class determining King behavior
+# Methods: find_possible_moves (determines valid moves based on @moveset and all other board positions to prevent moving into check), in_check (see if this king is in check)
+# Attributes: @moveset (all directions), @icon (black or white king symbol), @possible_moves (array), @color (black or white), @x_position (0 - 7), @y_position (0 - 7)
 class King < ChessPiece
   def initialize(color, position)
     @moveset = [
@@ -16,7 +18,6 @@ class King < ChessPiece
       [-1, 0]
     ]
     @icon = color ? '♚' : '♔'
-    @possible_moves = []
     super
   end
 

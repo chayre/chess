@@ -3,6 +3,8 @@
 require_relative 'piece'
 
 # Class determining Pawn behavior
+# Methods: find_possible_moves (determines valid moves based on @moveset and board positions)
+# Attributes: @moveset (up/down only; diagonal up/down to capture), @icon (black or white pawn symbol), @possible_moves (array), @color (black or white), @x_position (0 - 7), @y_position (0 - 7)
 class Pawn < ChessPiece
   attr_accessor :has_moved
 

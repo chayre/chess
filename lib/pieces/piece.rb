@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 # Chess piece class from which all other pieces will inherit
+# Methods: find_possible_moves (determines valid moves based on @moveset and board positions)
+# Attributes: @color (black or white), @x_position (0 - 7), @y_position (0 - 7)
 class ChessPiece
   attr_accessor :color, :moveset, :x_position, :y_position, :possible_moves, :icon
 
@@ -10,7 +12,6 @@ class ChessPiece
     # Position on board will be input as an array with two elements
     @x_position = position[0]
     @y_position = position[1]
-    @possible_moves = []
   end
 
   # Based on the moveset, calculate the possible moves and add it to this piece's possible_moves array. There are three conditions:
