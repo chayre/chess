@@ -18,6 +18,7 @@ class Player
   end
 
   # Compare input to regex for a match; if not a match, loop through until input is valid
+  # Also converts the input to lowercase (useful for Chess.translate(array))
   def input_get
     puts 'Submit input:'
     input = gets.chomp.downcase

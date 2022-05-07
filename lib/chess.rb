@@ -37,7 +37,7 @@ class Chess
     end
   end 
 
-  # Get the move input; normalize it to two position arrays. Check if the move is possible and loop again if it's not. Then execute move and switch players
+  # Get the move input; translate it to two position arrays. Check if the move is possible and loop again if it's not. Then execute move and switch players
   def play_turn
     print "It's your turn, #{@current_player.name}. Write your move as (for example): C5 to D3\n\n"
     move = nil
@@ -47,9 +47,9 @@ class Chess
 
     loop do
       move = @current_player.input_get
-      # Take the player input (which is in the form of "A4 to B3") and convert it to coordinates (like [1, 2] and [3, 5]) utilizing the normalize method
-      current_position = normalize([move[2], move[1]])
-      desired_position = normalize([move[4], move[3]])
+      # Take the player input (which is in the form of "A4 to B3") and convert it to coordinates (like [1, 2] and [3, 5]) utilizing the translate method
+      current_position = translate([move[2], move[1]])
+      desired_position = translate([move[4], move[3]])
       # Identify the piece that the player would like to move as piece
       piece = @board.positions[current_position[0]][current_position[1]]
       # If the piece is not there, if its possible moves don't include the desired position, or if it isn't their piece then go through this loop again
@@ -71,7 +71,7 @@ class Chess
 
   def play_game
     game_setup
-    # Continue playing until checmate or a draw
+    # Continue playing until checkmate or draw
     until checkmate? || draw?
       # Play a turn, then display the new board layout
       play_turn
@@ -83,7 +83,7 @@ class Chess
     strikes = 0
     check = 0
     update_possible_moves
-    @board.positions.flatten.select {|square| square.instance_of?(King) && square.color == @current_player.color }.each do |king|
+    @board.positions.flatten.select {|item| item.instance_of?(King) && item.color == @current_player.color }.each do |king|
       strikes += 1 if king.in_check?(@board.positions)
       check += 1 if king.in_check?(@board.positions)
       strikes += 1 if any_breaks_checks? == false
@@ -132,7 +132,7 @@ class Chess
     # Now that we saved the board, we'll perform a hypothetical move
     move(current, desired)
     # Go through the board until you find the current player's king
-    @board.positions.flatten.select { |square| !square.nil? && square.instance_of?(King) && square.color == @current_player.color }.each do |king|
+    @board.positions.flatten.select { |item| !item.nil? && item.instance_of?(King) && item.color == @current_player.color }.each do |king|
       # If the hypothetical move results in the king not being in check, this method will return true
       breaks_check = true if king.in_check?(@board.positions) == false
     end
@@ -146,7 +146,7 @@ class Chess
   # For each piece on the board of the current player's color, determine if it has a move which can break the king out of check
   def any_breaks_checks?
     # Iterate through each piece of the current player's color
-    @board.positions.flatten.select { |square| !square.nil? && square.color == @current_player.color }.each do |piece|
+    @board.positions.flatten.select { |item| !item.nil? && item.color == @current_player.color }.each do |piece|
       # Iterate through each move for each piece's moveset
       piece.possible_moves.each do |move|
         # Check if that move has broken the king out of check. There only needs to be one instance of breaking check for the condition to be true
@@ -192,8 +192,9 @@ class Chess
     @board.display
   end
 
-  # Standardizes input ("A1 to C2" -> "[1,1], [3,2]")
-  def normalize(array)
+  # Translates user input into numerical array ("a8" -> [0,0])
+  def translate(array)
+    # Convert to ASCII code and subtract to get a number 0 through 7
     array[1] = array[1].ord - 97
     array[0] = 7 - (array[0].to_i - 1)
     array
