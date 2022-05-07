@@ -31,17 +31,26 @@ class King < ChessPiece
 
       # If the hypothetical move stays within the confines of the board
       if (0..7).cover?(x) && (0..7).cover?(y)
+        # Skip this process if the move is not onto a blank space or a piece of the opposite color
+        # Need to use unless here, otherwise we'll get a bug when we try to find the .color attribute of a nil object
+        next unless positions[x][y].nil? || positions[x][y].color != @color
 
         # Clone the current board positions
         test_positions = Board.clone(positions)
         # Pretend that we've moved the king from his current position ...
         test_positions[@x_position][@y_position] = nil
-        # ... and moved him to the hypothetical move position
-        test_king = King.new(true, [x, y])
+        # ... and moved him to the hypothetical move position 
+        # Case/when to differentiate between white/black King
+        case @color
+        when 'white'
+          test_king = King.new(true, [x, y])
+        when 'black'
+          test_king = King.new(false, [x, y])
+        end
         test_positions[x][y] = test_king
 
-        # For each of the pieces in the hypothetical board that are of the opposite color 
-        test_positions.flatten.select { |square| square !=  nil && square.color != @color }.each do |piece| 
+        # We need to check if, after our cloned King's hypothetical move, he has moved himself into a position where pieces of the enemy color can capture him in their next move
+        test_positions.flatten.select { |square| square !=  nil && square.color != @color }.each do |piece|
           if piece.instance_of?(King)
             piece.moveset.each do |test_move|
               a = piece.x_position + test_move[0]
