@@ -20,14 +20,14 @@ class Knight < ChessPiece
     super
   end
 
-  # Unlike queen/rook/bishop, knight cannot travel along its moveset in a single turn. Therefore, we use this extra method.
+  # Unlike queen/rook/bishop, knight cannot travel along its moveset in a single turn. Therefore, we use this extra method
   def find_possible_moves(positions)
     @possible_moves = []
 
     @moveset.each do |move|
       x = @x_position + move[0]
       y = @y_position + move[1]
-      # If the move is contained in the board and the desired position is empty or contains a piece of the opposite color...
+      # If the move is contained in the board and the desired position is empty or contains a piece of the opposite color, add it to the possible moves array
       if (0..7).cover?(x) && (0..7).cover?(y)
         @possible_moves << [x, y] if positions[x][y].nil? || positions[x][y].color != @color
       end

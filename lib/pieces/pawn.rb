@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'piece'
-require 'pry'
 
 # Class determining Pawn behavior
 class Pawn < ChessPiece
@@ -57,11 +56,12 @@ class Pawn < ChessPiece
       # Pawns can't move forward if there's another piece blocking them
       when :one_step
         @possible_moves << [x, y] if positions[x][y].nil?
-      # Pawns can only double step if they haven't moved
+      # Pawns can only double step if they haven't moved and they aren't being blocked
       when :double_step
-        @possible_moves << [x, y] if positions[x][y].nil? && positions[(x + @x_position) / 2][y].nil? && @has_moved == false
+        @possible_moves << [x, y] if positions[x][y].nil? && @has_moved == false
+        # Pawns can only move diagonally when there's a piece directly diagonal that's of the opposing color
       when :right_diagonal, :left_diagonal
-       @possible_moves << [x, y] if !positions[x][y].nil? && positions[x][y].color != @color
+        @possible_moves << [x, y] if !positions[x][y].nil? && positions[x][y].color != @color
       end
     end
   end

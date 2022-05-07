@@ -21,6 +21,7 @@ class ChessPiece
     @possible_moves = []
     # For each move in the defined movesets (will be defined individually for each unique piece)
     @moveset.each do |move|
+      # Calculate the hypothetical move by adding a move to the current position
       x = @x_position + move[0]
       y = @y_position + move[1]
       loop do
