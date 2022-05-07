@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 # Class which defines player name and their team (color)
+# Methods: initialize, name_get, input_get (queries player for a move)
+# Attributes: @color, @name
 class Player
   attr_accessor :color, :name
 
