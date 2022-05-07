@@ -9,6 +9,9 @@ require_relative 'pieces/king'
 require_relative 'pieces/pawn'
 
 # Class which places pieces on the board, tracks them in a positions array, and draws the board
+# Methods: initialize (create empty 8x8 board), fill_board (fill the board with starting position ChessPiece objects)
+# Methods (cont.): display (outputs chess board and chess pieces display to terminal), self.clone (store current board positions in a variable)
+# Attributes: @positions (Array of objects/nil elements, where each existant object is a ChessPiece)
 class Board
   attr_accessor :positions
 
@@ -23,7 +26,7 @@ class Board
     place_black_backline
     place_pawns
   end
-  
+
   # Place the backline on the white side by filling the positions array with objects of the appropriate class and type
   def place_white_backline
     @positions[7][0] = Rook.new(true, [7, 0])
@@ -79,7 +82,7 @@ class Board
     end
     puts '│'
   end
-  
+
   # Display row seperators in middle of chess board
   def display_separator
     puts '    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤'
