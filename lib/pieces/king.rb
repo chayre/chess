@@ -20,7 +20,7 @@ class King < ChessPiece
     super
   end
 
-
+  # King class needs a special find_possible_moves method because it cannot move itself into checkmate (and it can't travel infinitely like bishop/queen/rook)
   def find_possible_moves(positions)
     @possible_moves = []
 
