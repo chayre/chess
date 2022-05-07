@@ -2,11 +2,13 @@
 
 require_relative 'board'
 require_relative 'player'
-require 'pry'
 
 # Class which places pieces on the board, tracks them in a positions array, and draws the board
+# Methods: initialize (create a new board for this game), initialize_player, game_setup, switch_player, display
+# Methods (cont.): play_turn, play_game, checkmate?, draw?, king_breaks_check?, piece_breaks_check?, update_possible_moves, display, translate
+# Attributes: @board (board associated with this game) @current_player/@standby_player, @feedback (stores feedback to display)
 class Chess
-  attr_accessor :positions, :board, :white_player, :black_player, :current_player, :standby_player, :feedback
+  attr_accessor :board, :current_player, :standby_player, :feedback
 
   # When you start a new game, initialize the board 
   def initialize
@@ -69,6 +71,7 @@ class Chess
     initialize_player
   end
 
+  # Goes through entire process of playing the game
   def play_game
     game_setup
     # Continue playing until checkmate or draw
@@ -79,6 +82,7 @@ class Chess
     end
   end
 
+  # If all three strike conditions are met, end the game. If only the check condition is met, alert the player but continue
   def checkmate?
     strikes = 0
     check = 0
@@ -86,7 +90,7 @@ class Chess
     @board.positions.flatten.select {|item| item.instance_of?(King) && item.color == @current_player.color }.each do |king|
       strikes += 1 if king.in_check?(@board.positions)
       check += 1 if king.in_check?(@board.positions)
-      strikes += 1 if any_breaks_checks? == false
+      strikes += 1 if piece_breaks_checks? == false
       strikes += 1 if king.possible_moves.empty?
     end
     if strikes == 3
@@ -124,9 +128,9 @@ class Chess
     false
   end
 
-  # Load the board positions which have been saved
-  def breaks_check?(current, desired, piece)
-    breaks_check = false
+  # Load the board positions which have been saved and see if the king can simply move out of check
+  def king_breaks_check?(current, desired, piece)
+    king_breaks_check = false
     # Save our current boardstate to be reinstate later
     cache = Board.clone(@board.positions)
     # Now that we saved the board, we'll perform a hypothetical move
@@ -134,23 +138,23 @@ class Chess
     # Go through the board until you find the current player's king
     @board.positions.flatten.select { |item| !item.nil? && item.instance_of?(King) && item.color == @current_player.color }.each do |king|
       # If the hypothetical move results in the king not being in check, this method will return true
-      breaks_check = true if king.in_check?(@board.positions) == false
+      king_breaks_check = true if king.in_check?(@board.positions) == false
     end
     # Reload previous boardstate, before we tried out a hypothetical move to see if it would break the king out of check
     @board.positions = cache
     update_possible_moves
     # Returns true / false
-    breaks_check
+    king_breaks_check
   end
 
   # For each piece on the board of the current player's color, determine if it has a move which can break the king out of check
-  def any_breaks_checks?
+  def piece_breaks_checks?
     # Iterate through each piece of the current player's color
     @board.positions.flatten.select { |item| !item.nil? && item.color == @current_player.color }.each do |piece|
       # Iterate through each move for each piece's moveset
       piece.possible_moves.each do |move|
         # Check if that move has broken the king out of check. There only needs to be one instance of breaking check for the condition to be true
-        if breaks_check?([piece.x_position, piece.y_position], move, piece)
+        if king_breaks_check?([piece.x_position, piece.y_position], move, piece)
           return true
         end
       end
