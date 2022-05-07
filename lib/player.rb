@@ -4,12 +4,14 @@
 class Player
   attr_accessor :color, :name
 
+  # Initialize the player by creating an object with true/false indicating white/black, then get their name
   def initialize(color)
     @color = color ? 'white' : 'black'
     @name = nil
     name_get
   end
 
+  # Queries player and gets name
   def name_get
     puts "Which player will play #{@color}? Type their name."
     @name = gets.chomp

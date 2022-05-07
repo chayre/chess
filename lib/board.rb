@@ -113,6 +113,7 @@ class Board
     display_x_axis
   end
 
+  # Stores all board positions in cache so that it can be reloaded at a later point
   def self.clone(positions)
     cache = Marshal.load(Marshal.dump(positions))
   end

@@ -6,7 +6,7 @@ require 'pry'
 
 # Class which places pieces on the board, tracks them in a positions array, and draws the board
 class Chess
-  attr_accessor :positions, :board, :white_player, :black_player, :current_player, :standby_player
+  attr_accessor :positions, :board, :white_player, :black_player, :current_player, :standby_player, :feedback
 
   # When you start a new game, initialize the board 
   def initialize
@@ -15,6 +15,7 @@ class Chess
     @player2 = nil
     @current_player = nil
     @standby_player = nil
+    @feedback = nil
   end
 
   # Create two instances of the player class, one for white and black. Set the current player to white (as they'll go first)
@@ -36,7 +37,7 @@ class Chess
     end
   end 
 
-  # Get the move input; normalize it to two position arrays. Check if the move is possible and loop again if it's not
+  # Get the move input; normalize it to two position arrays. Check if the move is possible and loop again if it's not. Then execute move and switch players
   def play_turn
     print "It's your turn, #{@current_player.name}. Write your move as (for example): C5 to D3\n\n"
     move = nil
@@ -157,7 +158,7 @@ class Chess
     false
   end
 
-  # Alters the possible moveset attribute of each piece based on current board positions
+  # Alters the possible moves attribute of each piece based on current board positions
   def update_possible_moves
     # Flatten 2x2 board arrow into single level array of pieces and iterate through each
     @board.positions.flatten.each do |piece|
@@ -165,7 +166,9 @@ class Chess
       # "&." ensures this will not execute the find_possible_moves function if piece is nil 
       piece&.find_possible_moves(@board.positions) unless piece.instance_of?(King)
     end
+    # The King checks the possible moves of all enemy pieces, so we need to update his moves after the other pieces
     @board.positions.flatten.each do |piece|
+      # Only run this on pieces that are Kings (as before, &. prevents the method from being called on a nil object)
       piece&.find_possible_moves(@board.positions) if piece.instance_of?(King)
     end
   end
@@ -180,6 +183,7 @@ class Chess
     @board.positions[current[0]][current[1]] = nil
     @board.positions[desired[0]][desired[1]] = temp
 
+    # After making the move, update the moveset of each piece
     update_possible_moves
   end
 

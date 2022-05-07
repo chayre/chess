@@ -7,21 +7,24 @@ class Pawn < ChessPiece
   attr_accessor :has_moved
 
   def initialize(color, position)
+    # Color is a true/false input (mapping to white/black); if the color is true (white) we set it so it can move only up the board...
     if color 
       @moveset = {
       one_step: [-1, 0],
       double_step: [-2, 0],
       right_diagonal: [-1, +1],
       left_diagonal: [-1, -1]
-    }
+      }
+    # ... and if the color is false (black) we set it so it can only move down the board
     else
       @moveset = {
       one_step: [+1, 0],
       double_step: [+2, 0],
       right_diagonal: [+1, +1],
       left_diagonal: [+1, -1]
-    }
+      }
     end
+    # Pawns can only double-step if they haven't moved before; track this property in the instance variable @has_moved
     @has_moved = false
     @icon = color ? '♟' : '♙'
     @possible_moves = []
