@@ -24,18 +24,23 @@ class King < ChessPiece
   def find_possible_moves(positions)
     @possible_moves = []
 
+    # Add each of the king's moves to the current position
     @moveset.each do |move|
       x = @x_position + move[0]
       y = @y_position + move[1]
 
+      # If the hypothetical move stays within the confines of the board
       if (0..7).cover?(x) && (0..7).cover?(y)
 
+        # Clone the current board positions
         test_positions = Board.clone(positions)
-
+        # Pretend that we've moved the king from his current position ...
         test_positions[@x_position][@y_position] = nil
+        # ... and moved him to the hypothetical move position
         test_king = King.new(true, [x, y])
         test_positions[x][y] = test_king
 
+        # For each of the pieces in the hypothetical board that are of the opposite color 
         test_positions.flatten.select { |square| square !=  nil && square.color != @color }.each do |piece| 
           if piece.instance_of?(King)
             piece.moveset.each do |test_move|
