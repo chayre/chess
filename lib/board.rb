@@ -15,9 +15,11 @@ require_relative 'pieces/pawn'
 class Board
   attr_accessor :positions
 
-  def initialize
+  def initialize(empty = false)
     # Initialize the board, which is an 8 x 8 array of nil elements before placing pieces
     @positions = Array.new(8) { Array.new(8, nil) }
+    # Unless you initialize with a true input, keep the board empty (all nil elements)
+    fill_board unless empty
   end
 
   # Fill the white backline, black backline, and pawns on both sides for a new game
