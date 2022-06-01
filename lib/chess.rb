@@ -11,8 +11,8 @@ class Chess
   attr_accessor :board, :current_player, :standby_player, :feedback
 
   # When you start a new game, initialize the board 
-  def initialize
-    @board = Board.new
+  def initialize(test_condition = false)
+    @board = Board.new(test_condition)
     @player1 = nil
     @player2 = nil
     @current_player = nil
