@@ -24,7 +24,7 @@ class ChessPiece
     @possible_moves : an array containing x/y-position arrays which are valid moves for a piece
     @icon : a symbol (string) specific to each piece type (i.e. castle for Rook, horse for Knight)
   Methods:
-    def find_possible_moves(positions) : Using the current board positions and the rules of chess, populate the @possible_moves array 
+    def find_possible_moves(positions) # Using the current board positions and the rules of chess, populate the @possible_moves array 
     with the current valid moves for a single piece
  class Queen/Rook/Bishop < ChessPiece
 ```
