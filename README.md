@@ -18,12 +18,14 @@ class ChessPiece
     @color # boolean input that resolves via ternary operator to white or black
     @moveset # a constant array of arrays that defines the basic legal moves for ChessPieces
     @x_position # a number which represents x-position on the 8x8 chess board (in the chess board, the x-axis runs between the 
-    black and white player)
+    # black and white player)
     @y_position # a number which represents y-position on the 8x8 chess board (in the chess board, the y-axis runs perpendicular 
-    to the black and white front lines)
+    # to the black and white front lines)
     @possible_moves # an array containing x/y-position arrays which are valid moves for a piece
     @icon # a symbol (string) specific to each piece type (i.e. castle for Rook, horse for Knight)
   Methods:
+    def initialize(color, position) # Set the @color and @x_position/@y_position of a piece
+    # Called when a chesspiece is initialized
     def find_possible_moves(positions) # Using the current board positions and the rules of chess, populate the @possible_moves 
     # array with the current valid moves for a single piece
  class Queen/Rook/Bishop < ChessPiece
