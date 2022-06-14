@@ -36,7 +36,7 @@ class ChessPiece
      def initialize(color, position) # Defines the unique moveset and icon for Queen/Rook/Bishop instances
      super
        
- class Pawn< ChessPiece
+ class Pawn < ChessPiece
 ```
 
 
