@@ -28,12 +28,14 @@ class ChessPiece
     # Called when a chesspiece is initialized
     def find_possible_moves(positions) # Using the current board positions and the rules of chess, populate the @possible_moves 
     # array with the current valid moves for a single piece
+    
  class Queen/Rook/Bishop < ChessPiece
    Attributes: 
      super
    Methods: 
      def initialize(color, position) # Defines the unique moveset and icon for Queen/Rook/Bishop instances
-       super
+     super
+       
  class Pawn< ChessPiece
 ```
 
