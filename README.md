@@ -31,7 +31,10 @@ class ChessPiece
     # Using the current board positions and the rules of chess, populate the @possible_moves 
     # array with the current valid moves for a single piece
     def find_possible_moves(positions) 
-    
+ ```
+ 
+### Queen/Rook/Bishop Class  
+```ruby
  class Queen/Rook/Bishop < ChessPiece
    Attributes: 
      super
@@ -39,7 +42,10 @@ class ChessPiece
      # Defines the unique moveset and icon for Queen/Rook/Bishop instances
      def initialize(color, position) 
      super
-     
+```
+
+### Knight Class 
+```ruby 
  class Knight < ChessPiece
    Attributes: 
      super
@@ -48,18 +54,31 @@ class ChessPiece
      def initialize(color, position) 
      # Altered method to account for unique knight movement (can't make multiple moves in a line)
      def find_possible_moves(positions)
-       
- class Pawn < ChessPiece
 ```
-
-
-### Queen/Rook/Bishop Class
-
-### Knight Class
-
-### Pawn Class
-
-### King Class
+       
+ ### Pawn Class
+```ruby 
+ class Pawn < ChessPiece
+   Attributes: 
+     super
+   Methods: 
+     # Defines the unique moveset and icon for Knight instances
+     def initialize(color, position) 
+     # Altered method to account for unique knight movement (can't make multiple moves in a line)
+     def find_possible_moves(positions)
+ ```    
+     
+ ### King Class
+```ruby
+ class King < ChessPiece
+   Attributes: 
+     super
+   Methods: 
+     # Defines the unique moveset and icon for Knight instances
+     def initialize(color, position) 
+     # Altered method to account for unique knight movement (can't make multiple moves in a line)
+     def find_possible_moves(positions)
+```
 
 ## Board Class
 
