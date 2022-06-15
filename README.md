@@ -11,7 +11,6 @@ My first major goal with this project was to ensure I was adhering to object-ori
 
 ## ChessPiece Class and inheritors
 
-This class defines some basic traits which all other pieces possess.
 ```ruby
 class ChessPiece
   Attributes:  
