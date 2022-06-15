@@ -9,7 +9,7 @@ When creating new methods for this project, I first wrote tests in RSpec (a Ruby
 # Object-Oriented Programming
 My first major goal with this project was to ensure I was adhering to object-oriented programming principles - making sure that the most important pieces of my project were objects or incorporated within classes, not stand-alone methods. When the game begins, a _Chess_ object is instantiated. _Chess_ instantiates and contains a _Board_ object. _Board_ instantiates an array of objects that are each occupied by nil or children of the _ChessPiece_ class.
 
-## ChessPiece Class
+## ChessPiece Class and inheritors
 
 This class defines some basic traits which all other pieces possess.
 ```ruby
@@ -62,9 +62,9 @@ class ChessPiece
    Attributes: 
      super
    Methods: 
-     # Defines the unique moveset and icon for Knight instances
+     # Defines the unique moveset and icon for Pawn instances
      def initialize(color, position) 
-     # Altered method to account for unique knight movement (can't make multiple moves in a line)
+     # Altered method to account for unique pawn movement (can only move forward, capture diagonally)
      def find_possible_moves(positions)
  ```    
      
@@ -74,10 +74,12 @@ class ChessPiece
    Attributes: 
      super
    Methods: 
-     # Defines the unique moveset and icon for Knight instances
+     # Defines the unique moveset and icon for King instances
      def initialize(color, position) 
-     # Altered method to account for unique knight movement (can't make multiple moves in a line)
+     # Altered method to account for the fact that king cannot move itself into check
      def find_possible_moves(positions)
+     # Returns boolean describing if this king instance is in check
+     def in_check(positions) 
 ```
 
 ## Board Class
