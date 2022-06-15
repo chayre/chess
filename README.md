@@ -24,24 +24,30 @@ class ChessPiece
     @possible_moves # an array containing x/y-position arrays which are valid moves for a piece
     @icon # a symbol (string) specific to each piece type (i.e. castle for Rook, horse for Knight)
   Methods:
-    def initialize(color, position) # Set the @color and @x_position/@y_position of a piece
     # Called when a chesspiece is initialized
-    def find_possible_moves(positions) # Using the current board positions and the rules of chess, populate the @possible_moves 
+    # Set the @color and @x_position/@y_position of a piece
+    def initialize(color, position) 
+    
+    # Using the current board positions and the rules of chess, populate the @possible_moves 
     # array with the current valid moves for a single piece
+    def find_possible_moves(positions) 
     
  class Queen/Rook/Bishop < ChessPiece
    Attributes: 
      super
    Methods: 
-     def initialize(color, position) # Defines the unique moveset and icon for Queen/Rook/Bishop instances
+     # Defines the unique moveset and icon for Queen/Rook/Bishop instances
+     def initialize(color, position) 
      super
      
  class Knight < ChessPiece
    Attributes: 
      super
    Methods: 
-     def initialize(color, position) # Defines the unique moveset and icon for Queen/Rook/Bishop instances
-     def find_possible_moves(positions) # Altered method to account for unique knight movement (cannot make multiple moves in a line)
+     # Defines the unique moveset and icon for Knight instances
+     def initialize(color, position) 
+     # Altered method to account for unique knight movement (can't make multiple moves in a line)
+     def find_possible_moves(positions)
        
  class Pawn < ChessPiece
 ```
