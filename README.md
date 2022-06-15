@@ -35,6 +35,13 @@ class ChessPiece
    Methods: 
      def initialize(color, position) # Defines the unique moveset and icon for Queen/Rook/Bishop instances
      super
+     
+ class Knight < ChessPiece
+   Attributes: 
+     super
+   Methods: 
+     def initialize(color, position) # Defines the unique moveset and icon for Queen/Rook/Bishop instances
+     def find_possible_moves(positions) # Altered method to account for unique knight movement (cannot make multiple moves in a line)
        
  class Pawn < ChessPiece
 ```
