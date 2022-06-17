@@ -86,8 +86,9 @@ class ChessPiece
   Attributes:  
     @positions # an array containing ChessPiece objects / nil objects
   Methods:
-    # Called when a chesspiece is initialized
-    # Set the @color and @x_position/@y_position of a piece
+    # Called when a board is initialized
+    # Populate the @positions array with nil objects, then call fill_board
+    # to populate the @positions array with the starting ChessPiece objects
     def initialize(color, position) 
  ```
  
