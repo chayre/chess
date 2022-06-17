@@ -88,7 +88,7 @@ class ChessPiece
   Methods:
     # Called when a board is initialized
     # Populate the @positions array with nil objects, then call fill_board
-    # to populate the @positions array with the starting ChessPiece objects
+    # This populates the @positions array with the starting ChessPiece objects
     def initialize(color, position) 
  ```
  
