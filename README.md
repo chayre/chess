@@ -84,7 +84,7 @@ class ChessPiece
 ```ruby
 class ChessPiece
   Attributes:  
-    @color # boolean input that resolves via ternary operator to white or black
+    @positions # an array containing ChessPiece objects / nil objects
   Methods:
     # Called when a chesspiece is initialized
     # Set the @color and @x_position/@y_position of a piece
