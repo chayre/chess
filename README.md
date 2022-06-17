@@ -81,8 +81,26 @@ class ChessPiece
 ```
 
 ## Board Class
-
+```ruby
+class ChessPiece
+  Attributes:  
+    @color # boolean input that resolves via ternary operator to white or black
+  Methods:
+    # Called when a chesspiece is initialized
+    # Set the @color and @x_position/@y_position of a piece
+    def initialize(color, position) 
+ ```
+ 
 ## Chess Class
+```ruby
+class ChessPiece
+  Attributes:  
+    @color # boolean input that resolves via ternary operator to white or black
+  Methods:
+    # Called when a chesspiece is initialized
+    # Set the @color and @x_position/@y_position of a piece
+    def initialize(color, position) 
+ ```
 
 ![image](https://user-images.githubusercontent.com/88121502/165210322-e5e381eb-a31c-4758-8780-04feba80c492.png)
 
