@@ -1,5 +1,3 @@
-# WIP; READ-ME NOT FINISHED
-
 # Chess
 Chess recreated in Ruby (command-line). Fully-functional (piece movement and captures, check/checkmate, en passe, castling, pawn promotion) and developed iteratively with RSpec testing.
 
@@ -77,7 +75,8 @@ class ChessPiece
      def initialize(color, position) 
      # Altered method to account for the fact that king cannot move itself into check
      def find_possible_moves(positions)
-     # Returns boolean describing if this king instance is in check
+     # Returns boolean describing if this king instance is in check (enemy color can 
+     # capture it with their next move)
      def in_check(positions) 
 ```
 
