@@ -96,10 +96,10 @@ class ChessPiece
 ```ruby
 class ChessPiece
   Attributes:  
-    @positions # an array containing ChessPiece objects / nil objects
-    @positions # an array containing ChessPiece objects / nil objects
-    @positions # an array containing ChessPiece objects / nil objects
-    @color # boolean input that resolves via ternary operator to white or black
+    @board # contains the board object tied to the current chess game
+    @current_player # an array containing ChessPiece objects / nil objects
+    @standby_player # an array containing ChessPiece objects / nil objects
+    @feedback # boolean input that resolves via ternary operator to white or black
   Methods:
     # Called when a chesspiece is initialized
     # Set the @color and @x_position/@y_position of a piece
