@@ -82,7 +82,7 @@ class ChessPiece
 
 ## Board Class
 ```ruby
-class ChessPiece
+class Board
   Attributes:  
     @positions # an array containing ChessPiece objects / nil objects
   Methods:
@@ -92,14 +92,26 @@ class ChessPiece
     def initialize(color, position) 
  ```
  
-## Chess Class
+ ## Player Class
 ```ruby
-class ChessPiece
+class Player
   Attributes:  
     @board # contains the board object tied to the current chess game
     @current_player # an array containing ChessPiece objects / nil objects
     @standby_player # an array containing ChessPiece objects / nil objects
-    @feedback # boolean input that resolves via ternary operator to white or black
+  Methods:
+    # Called when a chesspiece is initialized
+    # Set the @color and @x_position/@y_position of a piece
+    def initialize(color, position) 
+ ```
+ 
+## Chess Class
+```ruby
+class Chess
+  Attributes:  
+    @board # contains the Board object tied to the current chess game
+    @current_player # contains the Player object which is currently playing
+    @standby_player # contains the Player object which is currently not playing
   Methods:
     # Called when a chesspiece is initialized
     # Set the @color and @x_position/@y_position of a piece
