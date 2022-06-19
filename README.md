@@ -103,6 +103,10 @@ class Player
     # Called when a player is initialized
     # Set the player color and call another method to get their name
     def initialize(color) 
+    # Query the player and get name
+    def name_get
+    # Get player input, convert to lowercase
+    def input_get
  ```
  
 ## Chess Class
