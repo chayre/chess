@@ -100,9 +100,9 @@ class Player
     @current_player # an array containing ChessPiece objects / nil objects
     @standby_player # an array containing ChessPiece objects / nil objects
   Methods:
-    # Called when a chesspiece is initialized
-    # Set the @color and @x_position/@y_position of a piece
-    def initialize(color, position) 
+    # Called when a player is initialized
+    # Set the player color and call another method to get their name
+    def initialize(color) 
  ```
  
 ## Chess Class
