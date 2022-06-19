@@ -96,9 +96,8 @@ class Board
 ```ruby
 class Player
   Attributes:  
-    @board # contains the board object tied to the current chess game
-    @current_player # an array containing ChessPiece objects / nil objects
-    @standby_player # an array containing ChessPiece objects / nil objects
+    @color # a string for the player color
+    @name # a string with user-entered player name
   Methods:
     # Called when a player is initialized
     # Set the player color and call another method to get their name
